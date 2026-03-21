@@ -4,7 +4,7 @@ TimeDate - Date and time formatting subroutines
 
 # VERSION
 
-version 2.34\_03
+version 2.35
 
 # SYNOPSIS
 

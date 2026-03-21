@@ -2,6 +2,8 @@ Revision history for TimeDate distribution.
 
 {{$NEXT}}
 
+2.35      2026-03-20 21:44:45-06:00 America/Denver
+
 2.34_03   2026-03-18 22:12:43-06:00 America/Denver (TRIAL RELEASE)
 
   * test: document and pin RT#84075/GH#12 fix in regression suite
