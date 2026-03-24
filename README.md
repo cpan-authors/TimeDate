@@ -50,6 +50,10 @@ handling for Perl.
 
     Timezone offset lookups and conversions for named timezones.
 
+# AI POLICY
+
+This project uses AI tools to assist development. Humans review and approve every change before it is merged. See [AI\_POLICY.md](AI_POLICY.md) for details.
+
 # SEE ALSO
 
 [Date::Format](https://metacpan.org/pod/Date%3A%3AFormat), [Date::Parse](https://metacpan.org/pod/Date%3A%3AParse), [Date::Language](https://metacpan.org/pod/Date%3A%3ALanguage), [Time::Zone](https://metacpan.org/pod/Time%3A%3AZone)
