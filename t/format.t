@@ -174,7 +174,7 @@ Italian
 %Y	1999
 %%	%
 %a	Mar
-%A	Martedi
+%A	Martedì
 %b	Set
 %B	Settembre
 %c	09/07/99 13:02:42
