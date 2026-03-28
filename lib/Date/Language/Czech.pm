@@ -56,7 +56,7 @@ sub strftime {
       my $ref = shift;
       my @a = @_;
       $a[0] =~ s/(%[do]\.?\s?)%B/$1%Q/;
-      $ref->SUPER::time2str(@a);
+      $ref->SUPER::strftime(@a);
       }
 
 1;
