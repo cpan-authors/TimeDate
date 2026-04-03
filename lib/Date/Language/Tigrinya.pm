@@ -45,7 +45,7 @@ our (@DoW, @DoWs, @MoY, @MoYs, @AMPM, @Dsuf, %MoY, %DoW);
 "\x{12F5}/\x{1230}"
 );
 
-@Dsuf = ("\x{12ed}" x 31);
+@Dsuf = ("\x{12ed}") x 31;
 
 Date::Language::_build_lookups();
 

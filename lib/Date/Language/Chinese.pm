@@ -21,7 +21,7 @@ our @DoWs = map { $_ } @DoW;
 our @MoYs = map { $_ } @MoY;
 our @AMPM = qw(上午 下午);
 
-our @Dsuf = (qw(日 日 日 日 日 日 日 日 日 日)) x 3;
+our @Dsuf = ("日") x 32;
 
 our ( %MoY, %DoW );
 Date::Language::_build_lookups();
