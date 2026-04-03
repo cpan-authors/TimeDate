@@ -26,6 +26,7 @@ our @DoW = qw(neděle pondělí úterý středa čtvrtek pátek sobota);
 our @DoWs = qw(Ne Po Út St Čt Pá So);
 
 our @AMPM = qw(dop. odp.);
+our @Dsuf = ('.') x 32;
 
 our ( %MoY, %DoW );
 Date::Language::_build_lookups();

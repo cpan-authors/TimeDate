@@ -43,7 +43,7 @@ if ( $] >= 5.006 ) {
 @MoYs = map { substr($_,0,3) } @MoY;
 @AMPM = ( "\x{1320}\x{12cb}\x{1275}", "\x{12a8}\x{1230}\x{12d3}\x{1275}" );
 
-@Dsuf = ("\x{129b}" x 31);
+@Dsuf = ("\x{129b}") x 31;
 }
 else {
 @DoW = (
@@ -73,7 +73,7 @@ else {
 @MoYs = map { substr($_,0,9) } @MoY;
 @AMPM = ( "ጠዋት", "ከሰዓት" );
 
-@Dsuf = ("ኛ" x 31);
+@Dsuf = ("ኛ") x 31;
 }
 
 Date::Language::_build_lookups();

@@ -67,6 +67,7 @@ for my $lang (sort keys %expected) {
     is(scalar @{"${pkg}::MoY"},  12, "$lang: 12 month names");
     is(scalar @{"${pkg}::MoYs"}, 12, "$lang: 12 short month names");
     is(scalar @{"${pkg}::AMPM"}, 2,  "$lang: 2 AM/PM entries");
+    cmp_ok(scalar @{"${pkg}::Dsuf"}, '>=', 31, "$lang: at least 31 day-suffix entries");
 }
 
 # Regression: Austrian October abbreviation must be "Okt" (German), not "Oct" (English)
