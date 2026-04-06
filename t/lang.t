@@ -6,11 +6,13 @@ use Date::Language;
 my $time = time;
 
 my @lang = qw(
-    English German Italian Bulgarian
-    French Spanish Swedish Norwegian
-    Danish Dutch Romanian Czech
-    Hungarian Finnish Austrian Brazilian
-    Portuguese Turkish
+    Afar Amharic Arabic Austrian Brazilian Bulgarian
+    Chinese Chinese_GB Czech Danish Dutch English
+    Finnish French Gedeo German Greek Hungarian
+    Icelandic Italian Norwegian Occitan Oromo
+    Portuguese Romanian Russian Russian_cp1251
+    Russian_koi8r Sidama Somali Spanish Swedish
+    Tigrinya TigrinyaEritrean TigrinyaEthiopian Turkish
 );
 
 for my $lang (@lang) {
