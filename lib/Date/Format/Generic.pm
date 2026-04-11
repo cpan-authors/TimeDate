@@ -214,7 +214,13 @@ sub format_R { &format_H . ":" . &format_M }
 sub format_T { &format_H . ":" . &format_M . ":" . &format_S }
 sub format_t { "\t" }
 sub format_n { "\n" }
-sub format_o { sprintf("%2d%s",$_[0]->[3],$Dsuf[$_[0]->[3]]) }
+sub format_o {
+    no strict 'refs';
+    my $pkg = ref($_[0]);
+    my $dsuf = $pkg ? \@{"${pkg}::Dsuf"} : undef;
+    $dsuf = \@Dsuf unless $dsuf && @$dsuf;
+    sprintf("%2d%s",$_[0]->[3],$dsuf->[$_[0]->[3]])
+}
 sub format_x { my $f = $format{'x'}; _subs($_[0],$f); }
 sub format_X { my $f = $format{'X'}; _subs($_[0],$f); }
 sub format_C { my $f = $format{'C'}; _subs($_[0],$f); }
