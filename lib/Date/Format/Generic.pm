@@ -232,6 +232,6 @@ sub format_Oq { roman(format_q(@_)) }
 sub format_Oy { roman(format_y(@_)) }
 sub format_OY { roman(format_Y(@_)) }
 
-sub format_G { int(($_[0]->[9] - 315993600) / 604800) }
+sub format_G { int(($_[0]->[9] - 315964800) / 604800) }
 
 1;
