@@ -92,11 +92,35 @@ sub str2time
  $day  = $lt[3]
     unless(defined $day);
 
- $year = ($month > $lt[4]) ? ($lt[5] - 1) : $lt[5]
-    unless(defined $year);
+ unless (defined $year) {
+   my $is_future = $month > $lt[4]
+                || ($month == $lt[4] && $day > $lt[3]);
+   $year = $is_future ? ($lt[5] - 1) : $lt[5];
+ }
 
- return defined $zone ? timegm($ss,$mm,$hh,$day,$month,$year) - $zone
-                      : timelocal($ss,$mm,$hh,$day,$month,$year);
+ return undef
+    unless(defined $month && $month <= 11 && $day >= 1 && $day <= 31
+        && $hh <= 23 && $mm <= 59 && $ss <= 59);
+
+ my $result;
+
+ if (defined $zone) {
+   $result = eval {
+     local $SIG{__DIE__} = sub {}; # match Date::Parse behavior
+     timegm($ss,$mm,$hh,$day,$month,$year);
+   };
+   return undef unless defined $result;
+   $result -= $zone;
+ }
+ else {
+   $result = eval {
+     local $SIG{__DIE__} = sub {}; # match Date::Parse behavior
+     timelocal($ss,$mm,$hh,$day,$month,$year);
+   };
+   return undef unless defined $result;
+ }
+
+ return $result;
 }
 
 1;
