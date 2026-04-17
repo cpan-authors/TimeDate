@@ -1,6 +1,6 @@
 use strict;
 use warnings;
-use Test::More tests => 26;
+use Test::More tests => 30;
 use Date::Parse qw(strptime str2time);
 
 # RT#48164: Date::Parse unable to set seconds correctly
@@ -121,4 +121,19 @@ use Date::Parse qw(strptime str2time);
     my $t = str2time("199001");
     ok(!defined($t),
         "RT#125949: str2time('199001') returns undef for ambiguous 6-digit input");
+}
+
+# Boost format (%Y-%b-%d) should only match valid month names, not arbitrary words.
+# Before the fix, "2024-abc-15" silently parsed using the current month as default.
+{
+    ok(!defined(str2time("2024-abc-15")),
+        "boost format: non-month word 'abc' is rejected");
+    ok(!defined(str2time("2024-foo-01")),
+        "boost format: non-month word 'foo' is rejected");
+
+    # Valid boost-format dates must still parse correctly
+    my $t = str2time("2024-Jan-15 12:00:00 UTC");
+    ok(defined($t), "boost format: '2024-Jan-15' is accepted");
+    my @g = gmtime($t);
+    is($g[3], 15, "boost format: '2024-Jan-15' gives day=15");
 }
