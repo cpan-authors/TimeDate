@@ -191,6 +191,7 @@ sub format_s {
 }
 sub format_S { sprintf("%02d",$_[0]->[0]) }
 sub format_U { wkyr(0, $_[0]->[6], $_[0]->[7]) }
+sub format_u { $_[0]->[6] || 7 }
 sub format_w { $_[0]->[6] }
 sub format_W { wkyr(1, $_[0]->[6], $_[0]->[7]) }
 sub format_y { sprintf("%02d",$_[0]->[5] % 100) }
@@ -209,6 +210,7 @@ sub format_z {
 
 sub format_c { &format_x . " " . &format_X }
 sub format_D { &format_m . "/" . &format_d . "/" . &format_y  }
+sub format_F { &format_Y . "-" . &format_m . "-" . &format_d }
 sub format_r { &format_I . ":" . &format_M . ":" . &format_S . " " . &format_p  }
 sub format_R { &format_H . ":" . &format_M }
 sub format_T { &format_H . ":" . &format_M . ":" . &format_S }

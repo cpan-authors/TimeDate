@@ -1,4 +1,4 @@
-use Test::More tests => 299;
+use Test::More tests => 314;
 use Date::Format qw(ctime time2str);
 use Date::Language;
 use utf8;
@@ -63,6 +63,8 @@ __DATA__
 %Y	1999
 %Z	GMT
 %z	+0000
+%F	1999-09-07
+%u	2
 %Od	VII
 %Oe	VII
 %OH	XIII
@@ -114,6 +116,8 @@ German
 %Y	1999
 %Z	GMT
 %z	+0000
+%F	1999-09-07
+%u	2
 %Od	VII
 %Oe	VII
 %OH	XIII
@@ -165,6 +169,8 @@ French
 %Y	1999
 %Z	GMT
 %z	+0000
+%F	1999-09-07
+%u	2
 915192000 # Fri Jan  1 12:00:00 1999 GMT
 %o	 1er
 %A	vendredi
@@ -208,6 +214,8 @@ Italian
 %Y	1999
 %Z	GMT
 %z	+0000
+%F	1999-09-07
+%u	2
 %Od	VII
 %Oe	VII
 %OH	XIII
@@ -220,6 +228,10 @@ Italian
 %Oq	III
 %OY	MCMXCIX
 %Oy	XCIX
+315964800	# Sun Jan  6 00:00:00 1980 GMT
+%u	7
+%w	0
+%F	1980-01-06
 316648800	# Wed Jan  14 00:00:00 1980
 %G	1	#0 is interpreted as empty string
 Bulgarian
@@ -262,6 +274,8 @@ Bulgarian
 %Z	GMT
 %z	+0000
 %z	+0000
+%F	2010-09-08
+%u	3
 %Od	VIII
 %Oe	VIII
 %OH	VI
@@ -314,6 +328,8 @@ Portuguese
 %Y	1999
 %Z	GMT
 %z	+0000
+%F	1999-09-07
+%u	2
 %Od	VII
 %Oe	VII
 %OH	XIII
