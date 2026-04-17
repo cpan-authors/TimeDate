@@ -254,4 +254,24 @@ ok(!defined str2time("not a date at all"), "str2time('not a date at all') return
     }
 }
 
+# --- Epoch -1 (Dec 31, 1969 23:59:59 UTC) parsing ---
+# timegm() returns -1 for this date, which collides with Perl's error
+# convention.  str2time must distinguish the legitimate -1 from errors.
+{
+    my $t = str2time("31 Dec 1969 23:59:59 GMT");
+    is($t, -1, "epoch -1: 4-digit year with GMT");
+
+    my $t2 = str2time("1969-12-31T23:59:59Z");
+    is($t2, -1, "epoch -1: ISO 8601 with Z");
+
+    my $t3 = str2time("Wed, 31 Dec 1969 23:59:59 +0000");
+    is($t3, -1, "epoch -1: RFC 2822 with +0000");
+
+    my $t4 = str2time("31 Dec 69 23:59:59 GMT");
+    is($t4, -1, "epoch -1: 2-digit year with GMT");
+
+    my $t5 = str2time("1969-12-31 23:59:59 +0000");
+    is($t5, -1, "epoch -1: ISO with space separator");
+}
+
 done_testing;

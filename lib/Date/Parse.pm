@@ -303,7 +303,7 @@ sub str2time
      if !defined $result
         or $result == -1
            && join("",$ss,$mm,$hh,$day,$month,$year)
-                ne "595923311169";
+                ne "59592331111969";
    # Detect integer overflow: post-1970 dates must produce a non-negative epoch
    return undef if $result < 0 && $year >= 1970;
    $result -= $zone;
@@ -313,11 +313,13 @@ sub str2time
      local $SIG{__DIE__} = sub {}; # Ick!
      timelocal($ss,$mm,$hh,$day,$month,$year);
    };
+   my @_neg1 = localtime(-1);
+   $_neg1[5] += 1900;
    return undef
      if !defined $result
         or $result == -1
            && join("",$ss,$mm,$hh,$day,$month,$year)
-                ne join("",(localtime(-1))[0..5]);
+                ne join("",@_neg1[0..5]);
    # Detect integer overflow: post-1970 dates must produce a non-negative epoch
    # Use 1971 to avoid false positives from timezone offsets near epoch 0
    return undef if $result < 0 && $year >= 1971;
