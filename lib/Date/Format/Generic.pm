@@ -135,7 +135,7 @@ if(open(LOCALE,"$locale"))
 sub wkyr {
     my($wstart, $wday, $yday) = @_;
     $wday = ($wday + 7 - $wstart) % 7;
-    return int(($yday - $wday + 13) / 7 - 1);
+    return int(($yday - $wday + 7) / 7);
 }
 
 ##
