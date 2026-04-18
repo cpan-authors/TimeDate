@@ -1,4 +1,4 @@
-use Test::More tests => 292;
+use Test::More tests => 299;
 use Date::Format qw(ctime time2str);
 use Date::Language;
 use utf8;
@@ -47,6 +47,7 @@ __DATA__
 %M	02
 %o	 7th
 %p	PM
+%P	pm
 %q	3
 %r	01:02:42 PM
 %R	13:02
@@ -325,3 +326,12 @@ Portuguese
 %Oq	III
 %OY	MCMXCIX
 %Oy	XCIX
+936709362 # Tue Sep  7 13:02:42 1999 GMT (PM)
+Dutch
+%p	NM
+%P	nm
+%a	di
+%A	dinsdag
+1283926923 # Wed Sep  8 06:22:03 2010 GMT (AM)
+%p	VM
+%P	vm
