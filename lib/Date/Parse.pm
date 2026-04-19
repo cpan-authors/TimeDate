@@ -200,6 +200,9 @@ sub {
   }
 
   if (defined $hh) {
+    if ($merid != 24 and $hh > 12) {
+      return;  # hours > 12 are incompatible with AM/PM
+    }
     if ($hh == 12) {
       $hh = 0 if $merid == $AM;
     }
