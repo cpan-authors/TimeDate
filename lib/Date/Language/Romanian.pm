@@ -1,5 +1,5 @@
 ##
-## Italian tables
+## Romanian tables
 ##
 
 package Date::Language::Romanian;
@@ -16,7 +16,7 @@ use base 'Date::Language';
 our (@DoW, @DoWs, @MoY, @MoYs, @AMPM, @Dsuf, %MoY, %DoW);
 
 @MoY  = qw(ianuarie februarie martie aprilie mai iunie
-        iulie august septembrie octombrie noembrie decembrie);
+        iulie august septembrie octombrie noiembrie decembrie);
 @DoW  = qw(duminica luni marti miercuri joi vineri sambata);
 @DoWs = map { substr($_,0,3) } @DoW;
 @MoYs = map { substr($_,0,3) } @MoY;
