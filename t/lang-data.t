@@ -69,4 +69,22 @@ for my $lang (sort keys %expected) {
     is(scalar @{"${pkg}::AMPM"}, 2,  "$lang: 2 AM/PM entries");
 }
 
+# Regression: Austrian October abbreviation must be "Okt" (German), not "Oct" (English)
+{
+    my $at = Date::Language->new('Austrian');
+    # Thu Oct 14 12:00:00 1999 UTC — mon=9 (October)
+    my $oct_time = 939816000;
+    is($at->time2str('%b', $oct_time, 'GMT'), "Okt",
+       "Austrian: October abbreviated as Okt, not Oct");
+}
+
+# Regression: Romanian November must be "noiembrie", not "noembrie"
+{
+    my $ro = Date::Language->new('Romanian');
+    # Mon Nov  1 12:00:00 1999 UTC — mon=10 (November)
+    my $nov_time = 941457600;
+    is($ro->time2str('%B', $nov_time, 'GMT'), "noiembrie",
+       "Romanian: November is noiembrie, not noembrie");
+}
+
 done_testing;
