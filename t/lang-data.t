@@ -35,7 +35,7 @@ my %expected = (
     Portuguese           => { A => "ter\x{e7}a-feira",                                                    a => "ter",                                        B => "setembro",                                                                 b => "set" },
     Oromo                => { A => "Qibxata",                                                              a => "Qib",                                        B => "Fuulbana",                                                                 b => "Fuu" },
     Romanian             => { A => "marti",                                                                a => "mar",                                        B => "septembrie",                                                               b => "sep" },
-    Russian              => { A => "\x{f3}\x{d2}\x{c5}\x{c4}\x{c1}",                                     a => "\x{f3}\x{d2}",                               B => "\x{f3}\x{c5}\x{ce}\x{d4}\x{d1}\x{c2}\x{d2}\x{d1}",                       b => "\x{f3}\x{c5}\x{ce}" },
+    Russian              => { A => "\x{f7}\x{d4}\x{cf}\x{d2}\x{ce}\x{c9}\x{cb}",                         a => "\x{f7}\x{d4}",                               B => "\x{f3}\x{c5}\x{ce}\x{d4}\x{d1}\x{c2}\x{d2}\x{d1}",                       b => "\x{f3}\x{c5}\x{ce}" },
     Russian_cp1251       => { A => "\x{c2}\x{f2}\x{ee}\x{f0}\x{ed}\x{e8}\x{ea}",                               a => "\x{c2}\x{f2}\x{f0}",                    B => "\x{d1}\x{e5}\x{ed}\x{f2}\x{ff}\x{e1}\x{f0}\x{fc}",                       b => "\x{d1}\x{e5}\x{ed}" },
     Russian_koi8r        => { A => "\x{f7}\x{d4}\x{cf}\x{d2}\x{ce}\x{c9}\x{cb}",                         a => "\x{f7}\x{d4}\x{d2}",                         B => "\x{f3}\x{c5}\x{ce}\x{d4}\x{d1}\x{c2}\x{d2}\x{d8}",                       b => "\x{f3}\x{c5}\x{ce}" },
     Sidama               => { A => "Maakisanyo",                                                           a => "Maa",                                        B => "September",                                                                b => "Sep" },
@@ -86,6 +86,34 @@ for my $lang (sort keys %expected) {
     my $nov_time = 941457600;
     is($ro->time2str('%B', $nov_time, 'GMT'), "noiembrie",
        "Romanian: November is noiembrie, not noembrie");
+}
+
+# Regression test: Russian @DoW must start with Sunday (index 0 = localtime wday 0)
+# Bug: @DoW previously started at Monday, causing every day name to be off by one.
+{
+    my $ru = Date::Language->new('Russian');
+
+    # Sat Jan  1 00:00:00 2000 UTC — wday=6 (Saturday)
+    my $sat = 946684800;
+    # Sun Jan  2 00:00:00 2000 UTC — wday=0 (Sunday)
+    my $sun = 946771200;
+    # Mon Jan  3 00:00:00 2000 UTC — wday=1 (Monday)
+    my $mon = 946857600;
+
+    # Saturday = Суббота (KOI8-R: \xf3\xd5\xc2\xc2\xcf\xd4\xc1)
+    is($ru->time2str('%A', $sat, 'GMT'),
+       "\xf3\xd5\xc2\xc2\xcf\xd4\xc1",
+       "Russian: Saturday formats as Суббота");
+
+    # Sunday = Воскресенье (KOI8-R: \xf7\xcf\xd3\xcb\xd2\xc5\xd3\xc5\xce\xd8\xc5)
+    is($ru->time2str('%A', $sun, 'GMT'),
+       "\xf7\xcf\xd3\xcb\xd2\xc5\xd3\xc5\xce\xd8\xc5",
+       "Russian: Sunday formats as Воскресенье");
+
+    # Monday = Понедельник (KOI8-R: \xf0\xcf\xce\xc5\xc4\xc5\xcc\xd8\xce\xc9\xcb)
+    is($ru->time2str('%A', $mon, 'GMT'),
+       "\xf0\xcf\xce\xc5\xc4\xc5\xcc\xd8\xce\xc9\xcb",
+       "Russian: Monday formats as Понедельник");
 }
 
 done_testing;

@@ -63,33 +63,33 @@ our (@DoW, @DoWs, @MoY, @MoYs, @MoY2, @DoWs2, @AMPM, @Dsuf, %MoY, %DoW);
 );
 
 @DoW = (
-    "\xf0\xcf\xce\xc5\xc4\xc5\xcc\xd8\xce\xc9\xcb",  # Понедельник
-    "\xf7\xd4\xcf\xd2\xce\xc9\xcb",                      # Вторник
-    "\xf3\xd2\xc5\xc4\xc1",                                # Среда
-    "\xfe\xc5\xd4\xd7\xc5\xd2\xc7",                      # Четверг
-    "\xf0\xd1\xd4\xce\xc9\xc3\xc1",                      # Пятница
-    "\xf3\xd5\xc2\xc2\xcf\xd4\xc1",                      # Суббота
     "\xf7\xcf\xd3\xcb\xd2\xc5\xd3\xc5\xce\xd8\xc5",    # Воскресенье
+    "\xf0\xcf\xce\xc5\xc4\xc5\xcc\xd8\xce\xc9\xcb",      # Понедельник
+    "\xf7\xd4\xcf\xd2\xce\xc9\xcb",                        # Вторник
+    "\xf3\xd2\xc5\xc4\xc1",                                # Среда
+    "\xfe\xc5\xd4\xd7\xc5\xd2\xc7",                        # Четверг
+    "\xf0\xd1\xd4\xce\xc9\xc3\xc1",                        # Пятница
+    "\xf3\xd5\xc2\xc2\xcf\xd4\xc1",                        # Суббота
 );
 
 @DoWs = (
+    "\xf7\xd3",  # Вс
     "\xf0\xce",  # Пн
     "\xf7\xd4",  # Вт
     "\xf3\xd2",  # Ср
     "\xfe\xd4",  # Чт
     "\xf0\xd4",  # Пт
     "\xf3\xc2",  # Сб
-    "\xf7\xd3",  # Вс
 );
 
 @DoWs2 = (
+    "\xf7\xd3\xcb",  # Вск
     "\xf0\xce\xc4",  # Пнд
     "\xf7\xd4\xd2",  # Втр
     "\xf3\xd2\xc4",  # Срд
     "\xfe\xd4\xd7",  # Чтв
     "\xf0\xd4\xce",  # Птн
     "\xf3\xc2\xd4",  # Сбт
-    "\xf7\xd3\xcb",  # Вск
 );
 
 @AMPM = (
