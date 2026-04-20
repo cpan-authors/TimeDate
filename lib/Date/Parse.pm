@@ -139,8 +139,17 @@ sub {
 
       if ($5) {
     $year = $5;
-    # Possible match for 1995-01-24 (short mainframe date format);
-    ($year,$month,$day) = ($1, $3 - 1, $5) if $month > 12;
+    # Possible match for 1995-01-24 or 31-12-2023
+    if ($month > 12) {
+      if ($1 > 31) {
+        # YYYY-MM-DD (mainframe date format)
+        ($year,$month,$day) = ($1, $3 - 1, $5);
+      }
+      else {
+        # DD-MM-YYYY (European date format)
+        ($year,$month,$day) = ($5, $3 - 1, $1);
+      }
+    }
     return if length($year) > 2 and $year < 1901;
       }
     }
