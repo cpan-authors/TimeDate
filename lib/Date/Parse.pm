@@ -89,8 +89,30 @@ sub {
 
   return unless $dtstr =~ /\S/;
 
+  # ISO 8601 week date: YYYY-Www-D or YYYYWwwD (with optional time suffix)
+  # Must be matched before ISO compact and boost patterns to prevent misparse.
+  # Without this, "2025-W17-1" would be caught by the boost pattern with
+  # $month{"w17"} = undef, silently producing a wrong date.
+  if ($dtstr =~ s/\s(\d{4})-?w(\d\d)-?(\d)(?:[-Tt ](\d\d?)(?:([-:]?)(\d\d?)(?:\5(\d\d?)(?:[.,](\d+))?)?)?)?(?=\D)/ /) {
+    my($wk_y,$wk_n,$wk_d) = ($1,$2,$3);
+    ($hh,$mm,$ss,$frac) = ($4,$6,$7,$8);
+    # Validate: week 1-53, day 1-7
+    if ($wk_n >= 1 && $wk_n <= 53 && $wk_d >= 1 && $wk_d <= 7) {
+      # Convert ISO week date to calendar date.
+      # Jan 4 is always in ISO week 1. Find its ISO day-of-week,
+      # then compute the target ordinal day and derive month/day.
+      my $jan4_t = timegm(0, 0, 12, 4, 0, $wk_y);
+      my $jan4_dow = (gmtime($jan4_t))[6] || 7;  # ISO: Mon=1..Sun=7
+      my $ordinal = 4 + ($wk_n - 1) * 7 + $wk_d - $jan4_dow;
+      my @cal = gmtime($jan4_t + ($ordinal - 4) * 86400);
+      ($year,$month,$day) = ($cal[5] + 1900, $cal[4], $cal[3]);
+    }
+    else {
+      return;  # invalid week or day number
+    }
+  }
   # ISO compact: YYYYMMDD without delimiter (month and day must be exactly 2 digits)
-  if ($dtstr =~ s/\s(\d{4})(\d\d)(\d\d)(?:[-Tt ](\d\d?)(?:([-:]?)(\d\d?)(?:\5(\d\d?)(?:[.,](\d+))?)?)?)?(?=\D)/ /) {
+  elsif ($dtstr =~ s/\s(\d{4})(\d\d)(\d\d)(?:[-Tt ](\d\d?)(?:([-:]?)(\d\d?)(?:\5(\d\d?)(?:[.,](\d+))?)?)?)?(?=\D)/ /) {
     ($year,$month,$day,$hh,$mm,$ss,$frac) = ($1,$2-1,$3,$4,$6,$7,$8);
   }
   # Date with explicit delimiter: YYYY[-:]MM[-:]DD
@@ -418,6 +440,8 @@ English, French, German and Italian.
 Below is a sample list of dates that are known to be parsable with Date::Parse
 
  1995-01-24T09:08:17.1823213           ISO-8601
+ 2025-W17-1                            ISO-8601 week date (Monday of week 17)
+ 2025-W17-1T10:30:00Z                  ISO-8601 week date with time
  Wed, 16 Jun 94 07:29:35 CST           Comma and day name are optional
  Thu, 13 Oct 94 10:13:13 -0700
  Wed, 9 Nov 1994 09:50:32 -0500 (EST)  Text in ()'s will be ignored.
