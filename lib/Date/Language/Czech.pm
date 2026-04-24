@@ -15,15 +15,15 @@ use base 'Date::Language';
 # VERSION: generated
 # ABSTRACT: Czech localization for Date::Format
 
-our @MoY = qw(leden únor bøezen duben kvìten èerven èervenec srpen záøí
-          øíjen listopad prosinec);
-our @MoYs = qw(led únor bøe dub kvì èvn èec srp záøí øíj lis pro);
+our @MoY = qw(leden únor březen duben květen červen červenec srpen září
+          říjen listopad prosinec);
+our @MoYs = qw(led únor bře dub kvě čvn čec srp září říj lis pro);
 our @MoY2 = @MoY;
 for (@MoY2)
       { s!en$!na! or s!ec$!ce! or s!ad$!adu! or s!or$!ora!; }
 
-our @DoW = qw(nedìle pondìlí úterý støeda ètvrtek pátek sobota);
-our @DoWs = qw(Ne Po Út St Èt Pá So);
+our @DoW = qw(neděle pondělí úterý středa čtvrtek pátek sobota);
+our @DoWs = qw(Ne Po Út St Čt Pá So);
 
 our @AMPM = qw(dop. odp.);
 
