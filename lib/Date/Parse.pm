@@ -180,7 +180,13 @@ sub {
     }
     elsif ($dtstr =~ s#($monpat)\s*(\d+)\s*($sufpat)?\s# #o) {
       $month = $month{$1};
-      if ($2 > 31) { $year = $2 } else { $day = $2 }
+      # If the number is > 31 and no four-digit year remains in the string,
+      # treat it as a year (e.g. 'December 2009' or 'January 95').
+      # If a four-digit year still follows (e.g. 'September 34, 1984'), the
+      # number must be a day — leave it as-is so the range check rejects it.
+      # Save $2 before the lookahead: any regex with no captures resets $2.
+      my $num = $2;
+      if ($num > 31 && $dtstr !~ /\s\d{4}\s/) { $year = $num } else { $day = $num }
     }
     elsif ($dtstr =~ s#($monpat)([\/-])(\d+)[\/-]# #o) {
       ($month,$day) = ($month{$1},$3);
