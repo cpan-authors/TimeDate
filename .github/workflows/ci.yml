@@ -52,6 +52,7 @@ jobs:
           sudo: false
           global: false
           cpanfile: ".github/cpanfile"
+          version: "0.997016"
       - name: Set PERL5LIB to local lib
         run: echo "PERL5LIB=$(pwd)/local/lib/perl5" >> $GITHUB_ENV
       - name: Makefile.PL
