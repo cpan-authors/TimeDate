@@ -84,7 +84,7 @@ sub {
   # ignore day names
   $dtstr =~ s#([\d\w\s])[\.\,]\s#$1 #sog;
   $dtstr =~ s/(?<!\d),|,(?!\d)/ /g;
-  $dtstr =~ s#($daypat)(\s+(den\s)?|\s*)# #o;
+  $dtstr =~ s#($daypat)(?![a-zA-Z])(\s+(den\s)?|\s*)# #o;
   # Time: 12:00 or 12:00:00 with optional am/pm
 
   return unless $dtstr =~ /\S/;
