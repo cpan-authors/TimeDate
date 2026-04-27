@@ -1,6 +1,6 @@
 use strict;
 use warnings;
-use Test::More tests => 30;
+use Test::More tests => 36;
 use Date::Parse qw(strptime str2time);
 
 # RT#48164: Date::Parse unable to set seconds correctly
@@ -136,4 +136,20 @@ use Date::Parse qw(strptime str2time);
     ok(defined($t), "boost format: '2024-Jan-15' is accepted");
     my @g = gmtime($t);
     is($g[3], 15, "boost format: '2024-Jan-15' gives day=15");
+
+    # Case-insensitive month matching
+    my $t_uc = str2time("2024-JAN-15 12:00:00 UTC");
+    ok(defined($t_uc), "boost format: '2024-JAN-15' (uppercase) is accepted");
+    my @g_uc = gmtime($t_uc);
+    is($g_uc[3], 15, "boost format: '2024-JAN-15' gives day=15");
+
+    my $t_lc = str2time("2024-jan-15 12:00:00 UTC");
+    ok(defined($t_lc), "boost format: '2024-jan-15' (lowercase) is accepted");
+    my @g_lc = gmtime($t_lc);
+    is($g_lc[3], 15, "boost format: '2024-jan-15' gives day=15");
+
+    my $t_mc = str2time("2024-JaN-15 12:00:00 UTC");
+    ok(defined($t_mc), "boost format: '2024-JaN-15' (mixed case) is accepted");
+    my @g_mc = gmtime($t_mc);
+    is($g_mc[3], 15, "boost format: '2024-JaN-15' gives day=15");
 }

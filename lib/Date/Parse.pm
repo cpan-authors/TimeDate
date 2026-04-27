@@ -122,7 +122,7 @@ sub {
 
   # default C++ boost timestamp is effectively %Y-%b-%d %H:%M:%S.%f
   # details: https://svn.boost.org/trac/boost/ticket/8839
-  if ($dtstr =~ s/\s(\d{4})([-:]?)($monpat)\2(\d\d?)(?:[-Tt ](\d\d?)(?:([-:]?)(\d\d?)(?:\6(\d\d?)(?:[.,](\d+))?)?)?)?(?=\D)/ /o) {
+  if ($dtstr =~ s/\s(\d{4})([-:]?)($monpat)\2(\d\d?)(?:[-Tt ](\d\d?)(?:([-:]?)(\d\d?)(?:\6(\d\d?)(?:[.,](\d+))?)?)?)?(?=\D)/ /oi) {
     ($year,$month,$day,$hh,$mm,$ss,$frac) = ($1,$month{$3},$4,$5,$7,$8,$9);
   }
 
