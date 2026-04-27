@@ -99,7 +99,7 @@ sub str2time
  }
 
  return undef
-    unless(defined $month && $month <= 11 && $day >= 1 && $day <= 31
+    unless($month <= 11 && $day >= 1 && $day <= 31
         && $hh <= 23 && $mm <= 59 && $ss <= 59);
 
  my $result;
@@ -109,7 +109,12 @@ sub str2time
      local $SIG{__DIE__} = sub {}; # match Date::Parse behavior
      timegm($ss,$mm,$hh,$day,$month,$year);
    };
-   return undef unless defined $result;
+   return undef
+     if !defined $result
+        or $result == -1
+           && join("",$ss,$mm,$hh,$day,$month,$year)
+                ne "59592331111969";
+   return undef if $result < 0 && $year >= 1970;
    $result -= $zone;
  }
  else {
@@ -117,7 +122,14 @@ sub str2time
      local $SIG{__DIE__} = sub {}; # match Date::Parse behavior
      timelocal($ss,$mm,$hh,$day,$month,$year);
    };
-   return undef unless defined $result;
+   my @_neg1 = localtime(-1);
+   $_neg1[5] += 1900;
+   return undef
+     if !defined $result
+        or $result == -1
+           && join("",$ss,$mm,$hh,$day,$month,$year)
+                ne join("",@_neg1[0..5]);
+   return undef if $result < 0 && $year >= 1971;
  }
 
  return $result;

@@ -3,7 +3,6 @@ use warnings;
 use Test::More;
 use Date::Language;
 use Date::Parse;
-use POSIX qw(mktime);
 
 my $lang = Date::Language->new('English');
 
