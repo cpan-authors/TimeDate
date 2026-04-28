@@ -157,6 +157,7 @@ category of the program's locale.
 	%T 	time format: 21:05:57
 	%u	day of the week, numerically, Monday == 1 (1..7)
 	%U 	week number, Sunday as first day of week
+	%V	ISO 8601 week number (01-53)
 	%w 	day of the week, numerically, Sunday == 0
 	%W 	week number, Monday as first day of week
 	%x 	date format: 11/19/94
