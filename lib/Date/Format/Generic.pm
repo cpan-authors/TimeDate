@@ -56,11 +56,13 @@ sub strftime
    $epoch = timelocal(@{$time}[0..5]);
 
    @$me = gmtime($epoch + tz_offset($tzname));
+   $me->[9] = $epoch;
   }
  else
   {
    @$me = @$time;
-   undef $epoch;
+   $epoch = timelocal(@$me[0..5]);
+   $me->[9] = $epoch;
   }
 
  _subs($me,$fmt);
