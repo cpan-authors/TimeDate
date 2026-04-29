@@ -47,7 +47,6 @@ jobs:
         run: perl -V
       - name: install test deps using cpm
         uses: perl-actions/install-with-cpm@v2
-        continue-on-error: true
         with:
           sudo: false
           global: false
