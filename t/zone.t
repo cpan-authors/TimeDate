@@ -40,6 +40,29 @@ is(tz_offset("PHT"),  28800, "tz_offset PHT = 28800 (Philippine Time, UTC+8)");
 is(tz_offset("ict"),  25200, "tz_offset ict case insensitive");
 is(tz_offset("pht"),  28800, "tz_offset pht case insensitive");
 
+# tz_offset: Australian timezone abbreviations
+is(tz_offset("ACST"), 34200,  "tz_offset ACST = 34200 (Australian Central Standard, UTC+9:30)");
+is(tz_offset("ACDT"), 37800,  "tz_offset ACDT = 37800 (Australian Central Daylight, UTC+10:30)");
+is(tz_offset("AEST"), 36000,  "tz_offset AEST = 36000 (Australian Eastern Standard, UTC+10)");
+is(tz_offset("AEDT"), 39600,  "tz_offset AEDT = 39600 (Australian Eastern Daylight, UTC+11)");
+is(tz_offset("AWST"), 28800,  "tz_offset AWST = 28800 (Australian Western Standard, UTC+8)");
+is(tz_offset("AWDT"), 32400,  "tz_offset AWDT = 32400 (Australian Western Daylight, UTC+9)");
+
+# tz_offset: African timezone abbreviations
+is(tz_offset("SAST"), 7200,   "tz_offset SAST = 7200 (South African Standard, UTC+2)");
+is(tz_offset("EAT"),  10800,  "tz_offset EAT = 10800 (East Africa, UTC+3)");
+
+# tz_offset: Middle East and South Asian timezone abbreviations
+is(tz_offset("TRT"),  10800,  "tz_offset TRT = 10800 (Turkey, UTC+3)");
+is(tz_offset("IRST"), 12600,  "tz_offset IRST = 12600 (Iran Standard, UTC+3:30)");
+is(tz_offset("IRDT"), 16200,  "tz_offset IRDT = 16200 (Iran Daylight, UTC+4:30)");
+is(tz_offset("AFT"),  16200,  "tz_offset AFT = 16200 (Afghanistan, UTC+4:30)");
+is(tz_offset("PKT"),  18000,  "tz_offset PKT = 18000 (Pakistan Standard, UTC+5)");
+is(tz_offset("NPT"),  20700,  "tz_offset NPT = 20700 (Nepal, UTC+5:45)");
+
+# tz_offset: European DST abbreviations
+is(tz_offset("WEST"), 3600,   "tz_offset WEST = 3600 (Western European Summer, UTC+1)");
+
 # tz_offset: unknown zone returns undef
 is(tz_offset("BOGUS"), undef, "tz_offset unknown zone returns undef");
 
