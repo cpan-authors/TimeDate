@@ -12,13 +12,13 @@ use base 'Date::Language';
 our (@DoW, @DoWs, @MoY, @MoYs, @AMPM, @Dsuf, %MoY, %DoW);
 
 @DoW = qw(الأحد الاثنين الثلاثاء الأربعاء الخميس الجمعة السبت);
-@MoY = qw(يناير فبراير مسيرة أبريل مايو يونيو يوليو أغسطس سبتمبر أكتوبر نوفمبر ديسمبر);
+@MoY = qw(يناير فبراير مارس أبريل مايو يونيو يوليو أغسطس سبتمبر أكتوبر نوفمبر ديسمبر);
 @DoWs = map { substr($_,0,3) } @DoW;
 @MoYs = map { substr($_,0,3) } @MoY;
 $MoYs[6] = 'يوليو';
 @AMPM = qw(صباحا مساءا);
 
-@Dsuf = ((qw(er e e e e e e e e e)) x 3, 'er'); #To be amended
+@Dsuf = ('') x 31;
 
 Date::Language::_build_lookups();
 
