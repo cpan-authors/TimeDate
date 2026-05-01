@@ -111,6 +111,28 @@ sub {
       return;  # invalid week or day number
     }
   }
+  # ISO 8601 ordinal date: YYYY-DDD (with optional time suffix)
+  # Must be matched before ISO compact to prevent "2025-123" from being mishandled.
+  # DDD is the day-of-year (001-366). Delimiter required to avoid false positives
+  # with 7-digit numbers.
+  elsif ($dtstr =~ s/\s(\d{4})-(\d{3})(?:[-Tt ](\d\d?)(?:([-:]?)(\d\d?)(?:\4(\d\d?)(?:[.,](\d+))?)?)?)?(?=\D)/ /) {
+    my($ord_y,$ord_d) = ($1,$2);
+    ($hh,$mm,$ss,$frac) = ($3,$5,$6,$7);
+    if ($ord_d >= 1 && $ord_d <= 366) {
+      # Convert ordinal day to calendar month/day.
+      my $jan1_t = timegm(0, 0, 12, 1, 0, $ord_y);
+      my @cal = gmtime($jan1_t + ($ord_d - 1) * 86400);
+      # Verify the resulting date is still in the same year (rejects day 366
+      # for non-leap years and day > 365 for leap years past Dec 31).
+      if ($cal[5] + 1900 != $ord_y) {
+        return;  # day-of-year out of range for this year
+      }
+      ($year,$month,$day) = ($ord_y, $cal[4], $cal[3]);
+    }
+    else {
+      return;  # invalid day-of-year
+    }
+  }
   # ISO compact: YYYYMMDD without delimiter (month and day must be exactly 2 digits)
   elsif ($dtstr =~ s/\s(\d{4})(\d\d)(\d\d)(?:[-Tt ](\d\d?)(?:([-:]?)(\d\d?)(?:\5(\d\d?)(?:[.,](\d+))?)?)?)?(?=\D)/ /) {
     ($year,$month,$day,$hh,$mm,$ss,$frac) = ($1,$2-1,$3,$4,$6,$7,$8);
@@ -460,6 +482,8 @@ English, French, German and Italian.
 Below is a sample list of dates that are known to be parsable with Date::Parse
 
  1995-01-24T09:08:17.1823213           ISO-8601
+ 2025-123                              ISO-8601 ordinal date (day 123 of 2025)
+ 2025-123T10:30:00Z                    ISO-8601 ordinal date with time
  2025-W17-1                            ISO-8601 week date (Monday of week 17)
  2025-W17-1T10:30:00Z                  ISO-8601 week date with time
  Wed, 16 Jun 94 07:29:35 CST           Comma and day name are optional
