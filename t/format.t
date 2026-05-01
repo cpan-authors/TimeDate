@@ -1,4 +1,4 @@
-use Test::More tests => 314;
+use Test::More tests => 324;
 use Date::Format qw(ctime time2str);
 use Date::Language;
 use utf8;
@@ -35,6 +35,7 @@ __DATA__
 %d	07
 %e	 7
 %D	09/07/99
+%g	99
 %G	1026
 %h	Sep
 %H	13
@@ -351,3 +352,15 @@ Dutch
 1283926923 # Wed Sep  8 06:22:03 2010 GMT (AM)
 %p	VM
 %P	vm
+1767182400 # Wed Dec 31 12:00:00 2025 GMT — ISO week 1 of 2026
+%g	26
+%V	01
+%y	25
+1451649600 # Fri Jan  1 12:00:00 2016 GMT — ISO week 53 of 2015
+%g	15
+%V	53
+%y	16
+1419854400 # Mon Dec 29 12:00:00 2014 GMT — ISO week 1 of 2015
+%g	15
+%V	01
+%y	14

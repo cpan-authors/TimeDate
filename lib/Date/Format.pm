@@ -134,6 +134,7 @@ category of the program's locale.
 	%e 	like %d, but a leading zero is replaced by a space (eg  1..31)
 	%D 	MM/DD/YY
 	%F	ISO 8601 date format: YYYY-MM-DD
+	%g	ISO 8601 week-based year (2 digits)
 	%G	GPS week number (weeks since January 6, 1980)
 	%h 	month abbr
 	%H 	hour, 24 hour clock, leading 0's)

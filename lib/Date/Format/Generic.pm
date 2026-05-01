@@ -244,21 +244,34 @@ sub format_OY { roman(format_Y(@_)) }
 
 sub format_G { int(($_[0]->[9] - 315964800) / 604800) }
 
-sub format_V {
+sub _iso_week_year {
     my $yday = $_[0]->[7];
     my $year = $_[0]->[5] + 1900;
-    # Convert Perl wday (Sun=0) to Monday-based (Mon=0..Sun=6)
     my $mwday = ($_[0]->[6] + 6) % 7;
-    # Day-of-year of the Thursday in this ISO week
     my $thu = $yday - $mwday + 3;
     if ($thu < 0) {
-        # Thursday falls in the previous year
-        my $py = $year - 1;
-        $thu += (($py % 4 == 0 && $py % 100 != 0) || $py % 400 == 0) ? 366 : 365;
+        return ($year - 1, undef);
     }
     my $ylen = (($year % 4 == 0 && $year % 100 != 0) || $year % 400 == 0) ? 366 : 365;
-    return sprintf("%02d", 1) if $thu >= $ylen;
-    sprintf("%02d", int($thu / 7) + 1);
+    if ($thu >= $ylen) {
+        return ($year + 1, 1);
+    }
+    return ($year, int($thu / 7) + 1);
 }
+
+sub format_V {
+    my ($iso_year, $wk) = _iso_week_year($_[0]);
+    unless (defined $wk) {
+        my $py = $iso_year;
+        my $yday = $_[0]->[7];
+        my $mwday = ($_[0]->[6] + 6) % 7;
+        my $thu = $yday - $mwday + 3;
+        $thu += (($py % 4 == 0 && $py % 100 != 0) || $py % 400 == 0) ? 366 : 365;
+        $wk = int($thu / 7) + 1;
+    }
+    sprintf("%02d", $wk);
+}
+
+sub format_g { sprintf("%02d", (_iso_week_year($_[0]))[0] % 100) }
 
 1;
