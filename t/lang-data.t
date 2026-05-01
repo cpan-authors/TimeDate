@@ -116,4 +116,13 @@ for my $lang (sort keys %expected) {
        "Russian: Monday formats as Понедельник");
 }
 
+# Regression: Arabic March must be مارس (māris), not مسيرة (masira = procession)
+{
+    my $ar = Date::Language->new('Arabic');
+    # Mon Mar  1 12:00:00 1999 UTC — mon=2 (March)
+    my $mar_time = 920289600;
+    is($ar->time2str('%B', $mar_time, 'GMT'), "\x{645}\x{627}\x{631}\x{633}",
+       "Arabic: March is \x{645}\x{627}\x{631}\x{633} (m\x{101}ris), not \x{645}\x{633}\x{64a}\x{631}\x{629} (masira)");
+}
+
 done_testing;
