@@ -43,6 +43,18 @@ my @cases = (
     [timegm(0,0,0,27,11,104), "53", "2004-12-27 (Mon) is week 53"],
     [timegm(0,0,0, 2,0,105),  "53", "2005-01-02 (Sun) is week 53 of 2004"],
     [timegm(0,0,0, 3,0,105),  "01", "2005-01-03 (Mon) is week 01 of 2005"],
+
+    # 2021: Jan 1 is Friday, previous year (2020) is leap year
+    # This is a regression test: the leap-year adjustment pushed $thu to
+    # exactly equal the current year's day count, triggering the year-end
+    # check incorrectly and returning week 01 instead of 53.
+    [timegm(0,0,0, 1,0,121), "53", "2021-01-01 (Fri) is week 53 of 2020 (leap year boundary)"],
+    [timegm(0,0,0, 2,0,121), "53", "2021-01-02 (Sat) is week 53 of 2020"],
+    [timegm(0,0,0, 3,0,121), "53", "2021-01-03 (Sun) is week 53 of 2020"],
+    [timegm(0,0,0, 4,0,121), "01", "2021-01-04 (Mon) is week 01 of 2021"],
+
+    # 2017: Jan 1 is Sunday → week 52 of 2016 (2016 is leap year)
+    [timegm(0,0,0, 1,0,117), "52", "2017-01-01 (Sun) is week 52 of 2016 (leap year)"],
 );
 
 for my $case (@cases) {
