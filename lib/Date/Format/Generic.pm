@@ -252,12 +252,17 @@ sub format_V {
     # Day-of-year of the Thursday in this ISO week
     my $thu = $yday - $mwday + 3;
     if ($thu < 0) {
-        # Thursday falls in the previous year
+        # Thursday falls in the previous year — this date belongs to
+        # the last ISO week of the previous year, skip year-end check
         my $py = $year - 1;
         $thu += (($py % 4 == 0 && $py % 100 != 0) || $py % 400 == 0) ? 366 : 365;
     }
-    my $ylen = (($year % 4 == 0 && $year % 100 != 0) || $year % 400 == 0) ? 366 : 365;
-    return sprintf("%02d", 1) if $thu >= $ylen;
+    else {
+        # Thursday falls in the next year — this date belongs to
+        # ISO week 1 of the following year
+        my $ylen = (($year % 4 == 0 && $year % 100 != 0) || $year % 400 == 0) ? 366 : 365;
+        return sprintf("%02d", 1) if $thu >= $ylen;
+    }
     sprintf("%02d", int($thu / 7) + 1);
 }
 
