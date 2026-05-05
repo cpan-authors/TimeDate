@@ -74,13 +74,14 @@ sub format_Z {
 sub str2time
 {
  my $me = shift;
+ my $now = @_ > 2 ? splice(@_, 2, 1) : time;
  my @t = $me->strptime(@_);
 
  return undef
     unless @t;
 
  my($ss,$mm,$hh,$day,$month,$year,$zone) = @t;
- my @lt  = localtime(time);
+ my @lt  = localtime($now);
 
  $hh    ||= 0;
  $mm    ||= 0;

@@ -105,4 +105,45 @@ my $lang = Date::Language->new('English');
     is($parsed, $t, "German round-trip ctime/str2time");
 }
 
+# --- EPOCH parameter: Date::Language should match Date::Parse ---
+
+{
+    # Use a fixed reference time: July 1 2024 00:00:00 UTC
+    my $ref = 1719792000;
+
+    # "25 Dec" relative to July 2024 → Dec 2023 (most recent past)
+    my $dp = str2time("25 Dec", undef, $ref);
+    my $dl = $lang->str2time("25 Dec", undef, $ref);
+
+    ok(defined $dp, "Date::Parse parses '25 Dec' with EPOCH ref");
+    ok(defined $dl, "Date::Language parses '25 Dec' with EPOCH ref");
+
+    if (defined $dp && defined $dl) {
+        my @dp_t = gmtime($dp);
+        my @dl_t = gmtime($dl);
+        is($dl_t[5] + 1900, $dp_t[5] + 1900,
+            "EPOCH param: '25 Dec' ref=Jul-2024 → year matches Date::Parse ("
+            . ($dp_t[5] + 1900) . ")");
+        is($dl_t[5] + 1900, 2023,
+            "EPOCH param: '25 Dec' ref=Jul-2024 → year 2023 (most recent past)");
+    }
+
+    # "15 Mar" relative to July 2024 → Mar 2024 (already past this year)
+    my $dp2 = str2time("15 Mar", undef, $ref);
+    my $dl2 = $lang->str2time("15 Mar", undef, $ref);
+
+    ok(defined $dp2, "Date::Parse parses '15 Mar' with EPOCH ref");
+    ok(defined $dl2, "Date::Language parses '15 Mar' with EPOCH ref");
+
+    if (defined $dp2 && defined $dl2) {
+        my @dp_t = gmtime($dp2);
+        my @dl_t = gmtime($dl2);
+        is($dl_t[5] + 1900, $dp_t[5] + 1900,
+            "EPOCH param: '15 Mar' ref=Jul-2024 → year matches Date::Parse ("
+            . ($dp_t[5] + 1900) . ")");
+        is($dl_t[5] + 1900, 2024,
+            "EPOCH param: '15 Mar' ref=Jul-2024 → year 2024 (past this year)");
+    }
+}
+
 done_testing;
