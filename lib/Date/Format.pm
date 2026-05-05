@@ -173,9 +173,10 @@ with C<O>, e.g. C<%OY> will output the year as roman numerals.
 
 =head1 LIMITATION
 
-The functions in this module are limited to the time range that can be
-represented by the time_t data type, i.e. 1901-12-13 20:45:53 GMT to
-2038-01-19 03:14:07 GMT.
+On Perl 5.12 and later with a 64-bit integer (the common case on modern
+systems), dates far beyond 2038 are supported.  On older 32-bit builds of
+Perl, the functions in this module are limited to the range of the
+C<time_t> data type: 1901-12-13 20:45:53 GMT to 2038-01-19 03:14:07 GMT.
 
 =head1 AUTHOR
 

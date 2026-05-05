@@ -472,6 +472,17 @@ Below is a sample list of dates that are known to be parsable with Date::Parse
  1999 10:02:18 "GMT"
  16 Nov 94 22:28:20 PST
 
+=head1 MISSING YEAR INFERENCE
+
+When the input date string does not contain a year, C<str2time> assumes the
+date refers to the most recent past occurrence.  If the month (and day) have
+not yet occurred in the current year, the previous year is used.  For example,
+parsing C<"25 Dec"> in June will return December 25 of the previous year, while
+parsing C<"15 Mar"> in June will return March 15 of the current year.
+
+The reference time used for this inference defaults to C<time()> but can be
+overridden with the optional C<EPOCH> parameter.
+
 =head1 BUGS
 
 When both the month and the date are specified in the date as numbers
