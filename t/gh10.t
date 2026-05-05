@@ -27,15 +27,18 @@ BEGIN {
 
 use POSIX qw();
 use Test::More;
+use Time::Zone qw();
 use Date::Format qw(time2str);
 
 # Skip the whole file if the platform does not support IANA timezone names.
-# Use epoch 1352019262 (2012-11-04 01:04:22 PDT): DST=1 in America/Los_Angeles
-# but DST=0 in UTC, so this check actually distinguishes the two and won't
-# produce a false-positive on a UTC-only system.
+# We verify that TZ='America/Los_Angeles' actually took effect by checking
+# both the DST flag AND the UTC offset for a known PDT epoch.  Checking only
+# the DST flag can false-positive on systems where TZ assignment fails but
+# the host's native timezone happens to have DST at this epoch (GH#99).
 my $has_la_tz = eval {
     my @lt = localtime(1352019262);    # 2012-11-04 01:04:22 PDT (before fall-back)
-    $lt[8] == 1;                       # Expect DST flag = 1 in PDT
+    $lt[8] == 1                        # Expect DST flag = 1 in PDT
+    && Time::Zone::calc_off(1352019262) == -7*3600;  # Expect UTC-7 (PDT offset)
 };
 plan( skip_all => "system does not support America/Los_Angeles timezone" )
     unless $has_la_tz;
