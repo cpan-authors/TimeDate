@@ -44,7 +44,7 @@ sub strftime
 
  ($pkg,$fmt,$time,$tzname) = @_;
 
- my $me = ref($pkg) ? $pkg : bless [];
+ my $me = ref($pkg) ? $pkg : bless [], $pkg;
 
  if(defined $tzname)
   {
