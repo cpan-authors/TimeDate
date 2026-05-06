@@ -105,4 +105,60 @@ my $lang = Date::Language->new('English');
     is($parsed, $t, "German round-trip ctime/str2time");
 }
 
+# --- Two-digit year normalization: must match Date::Parse ---
+# Without explicit normalization, Date::Language relies on Time::Local's
+# sliding window which diverges from Date::Parse's fixed POSIX threshold.
+
+{
+    for my $y (69, 70, 75, 95, 99) {
+        my $date = "1 Jun $y GMT";
+        my $dp = str2time($date);
+        my $dl = $lang->str2time($date);
+        ok(defined $dp, "Date::Parse parses '1 Jun $y GMT'");
+        ok(defined $dl, "Date::Language parses '1 Jun $y GMT'");
+        if (defined $dp && defined $dl) {
+            my $dp_year = (gmtime($dp))[5] + 1900;
+            my $dl_year = (gmtime($dl))[5] + 1900;
+            is($dl_year, $dp_year,
+                "two-digit year $y: Language ($dl_year) matches Parse ($dp_year)");
+        }
+    }
+
+    # Also test years in the 2000s range
+    for my $y (0, 1, 26, 50, 68) {
+        my $date = "15 Mar $y GMT";
+        my $dp = str2time($date);
+        my $dl = $lang->str2time($date);
+        ok(defined $dp, "Date::Parse parses '15 Mar $y GMT'");
+        ok(defined $dl, "Date::Language parses '15 Mar $y GMT'");
+        if (defined $dp && defined $dl) {
+            my $dp_year = (gmtime($dp))[5] + 1900;
+            my $dl_year = (gmtime($dl))[5] + 1900;
+            is($dl_year, $dp_year,
+                "two-digit year $y: Language ($dl_year) matches Parse ($dp_year)");
+        }
+    }
+}
+
+# --- Four-digit year with century: must survive round-trip ---
+
+{
+    my $date = "15 Mar 2024 10:30:00 GMT";
+    my $dp = str2time($date);
+    my $dl = $lang->str2time($date);
+    ok(defined $dp && defined $dl, "4-digit year parses in both");
+    is($dl, $dp, "4-digit year: Language matches Parse exactly");
+}
+
+# --- Fractional seconds preserved ---
+
+{
+    my $date = "2024-01-15T12:34:56.789 GMT";
+    my $result = $lang->str2time($date);
+    ok(defined $result, "fractional seconds date parses");
+    my $frac = $result - int($result);
+    ok($frac > 0.78 && $frac < 0.80,
+        "fractional seconds preserved (got $frac, expected ~0.789)");
+}
+
 done_testing;
