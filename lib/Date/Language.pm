@@ -79,12 +79,15 @@ sub str2time
  return undef
     unless @t;
 
- my($ss,$mm,$hh,$day,$month,$year,$zone) = @t;
+ my($ss,$mm,$hh,$day,$month,$year,$zone,$century) = @t;
  my @lt  = localtime(time);
 
  $hh    ||= 0;
  $mm    ||= 0;
  $ss    ||= 0;
+
+ my $frac = $ss - int($ss);
+ $ss = int $ss;
 
  $month = $lt[4]
     unless(defined $month);
@@ -97,6 +100,14 @@ sub str2time
                 || ($month == $lt[4] && $day > $lt[3]);
    $year = $is_future ? ($lt[5] - 1) : $lt[5];
  }
+
+ # Restore 4-digit year when century was present in the input
+ $year += 1900 if defined $century;
+
+ # Normalize two-digit years using POSIX convention (match Date::Parse behavior).
+ # Without this, Time::Local's own sliding window produces different results than
+ # Date::Parse::str2time for the same input string.
+ $year += ($year >= 69 ? 1900 : 2000) if $year < 100;
 
  return undef
     unless($month <= 11 && $day >= 1 && $day <= 31
@@ -132,7 +143,7 @@ sub str2time
    return undef if $result < 0 && $year >= 1971;
  }
 
- return $result;
+ return $result + $frac;
 }
 
 1;
