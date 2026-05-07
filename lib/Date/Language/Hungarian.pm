@@ -64,7 +64,7 @@ our @MoYs = map { substr($_,0,3) } @MoY;
 our @AMPM = qw(DE. DU.);
 
 # There is no 'th or 'nd in Hungarian, just a dot
-our @Dsuf = (".") x 31;
+our @Dsuf = (".") x 32;
 
 our ( %MoY, %DoW );
 Date::Language::_build_lookups();

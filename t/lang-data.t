@@ -67,7 +67,7 @@ for my $lang (sort keys %expected) {
     is(scalar @{"${pkg}::MoY"},  12, "$lang: 12 month names");
     is(scalar @{"${pkg}::MoYs"}, 12, "$lang: 12 short month names");
     is(scalar @{"${pkg}::AMPM"}, 2,  "$lang: 2 AM/PM entries");
-    cmp_ok(scalar @{"${pkg}::Dsuf"}, '>=', 31, "$lang: at least 31 day-suffix entries");
+    cmp_ok(scalar @{"${pkg}::Dsuf"}, '>=', 32, "$lang: at least 32 day-suffix entries (indices 0-31)");
 }
 
 # Regression: Austrian October abbreviation must be "Okt" (German), not "Oct" (English)
@@ -114,6 +114,23 @@ for my $lang (sort keys %expected) {
     is($ru->time2str('%A', $mon, 'GMT'),
        "\xf0\xcf\xce\xc5\xc4\xc5\xcc\xd8\xce\xc9\xcb",
        "Russian: Monday formats as Понедельник");
+}
+
+# Regression: format_o (%o) must produce a suffix for day 31 in all languages.
+# Bug: modules with @Dsuf of only 31 elements (indices 0-30) returned undef for
+# day 31 (index 31), producing a bare "31" instead of "31<suffix>".
+{
+    # Fri Jan 31 00:00:00 2025 UTC — day 31
+    my $day31_time = 1738281600;
+
+    for my $lang (sort keys %expected) {
+        my $obj = Date::Language->new($lang);
+        my $result = $obj->time2str('%o', $day31_time, 'GMT');
+        # Result must start with "31" and must not emit an undef warning.
+        # Languages with empty suffix (e.g. Romanian) produce "31" — that's fine,
+        # but it must be the empty string '', not undef.
+        like($result, qr/^\s*31/, "$lang: format_o day 31 produces output");
+    }
 }
 
 done_testing;

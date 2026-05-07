@@ -26,7 +26,7 @@ our @MoYs = @MoY;
 our @DoWs = @DoW;
 
 # the short form of ordinals
-our @Dsuf = ('.') x 31;
+our @Dsuf = ('.') x 32;
 
 # doesn't look like this is normally used...
 our @AMPM = qw(ap ip);

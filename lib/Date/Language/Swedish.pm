@@ -20,7 +20,7 @@ our @DoW  = map($_ . "dagen", qw(sön mån tis ons tors fre lör));
 our @DoWs = map { substr($_,0,2) } @DoW;
 
 # the ordinals are not typically used in modern times
-our @Dsuf = (('a') x 2, ('e') x 29);
+our @Dsuf = (('a') x 2, ('e') x 30);
 
 our @AMPM =   @{Date::Language::English::AMPM};
 

@@ -75,7 +75,7 @@ our (@DoW, @DoWs, @MoY, @MoYs, @AMPM, @Dsuf, %MoY, %DoW);
 
 @AMPM = ("πμ", "μμ");
 
-@Dsuf = ("η") x 31;
+@Dsuf = ("η") x 32;
 
 Date::Language::_build_lookups();
 

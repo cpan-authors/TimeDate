@@ -23,7 +23,7 @@ our (@DoW, @DoWs, @MoY, @MoYs, @AMPM, @Dsuf, %MoY, %DoW);
 
 @AMPM = qw(AM PM);
 
-@Dsuf = ('') x 31;
+@Dsuf = ('') x 32;
 
 
 Date::Language::_build_lookups();

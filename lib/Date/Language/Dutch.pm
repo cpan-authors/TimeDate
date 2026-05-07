@@ -24,7 +24,7 @@ $MoYs[2] = 'mrt'; # mrt is more common (Frank Maas)
 
 # these aren't normally used...
 @AMPM = qw(VM NM);
-@Dsuf = ('e') x 31;
+@Dsuf = ('e') x 32;
 
 
 Date::Language::_build_lookups();

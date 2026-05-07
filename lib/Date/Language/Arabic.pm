@@ -18,7 +18,7 @@ our (@DoW, @DoWs, @MoY, @MoYs, @AMPM, @Dsuf, %MoY, %DoW);
 $MoYs[6] = 'يوليو';
 @AMPM = qw(صباحا مساءا);
 
-@Dsuf = ((qw(er e e e e e e e e e)) x 3, 'er'); #To be amended
+@Dsuf = ((qw(er e e e e e e e e e)) x 3, 'er', 'e'); #To be amended
 
 Date::Language::_build_lookups();
 
