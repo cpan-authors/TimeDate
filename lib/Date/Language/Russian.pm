@@ -97,7 +97,7 @@ our (@DoW, @DoWs, @MoY, @MoYs, @MoY2, @DoWs2, @AMPM, @Dsuf, %MoY, %DoW);
     "\xd0\xd0",  # пп
 );
 
-@Dsuf = ('.') x 31;
+@Dsuf = ('.') x 32;
 
 Date::Language::_build_lookups();
 

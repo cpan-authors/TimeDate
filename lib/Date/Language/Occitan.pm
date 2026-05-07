@@ -22,7 +22,7 @@ our (@DoW, @DoWs, @MoY, @MoYs, @AMPM, @Dsuf, %MoY, %DoW);
 $MoYs[6] = 'jul';
 @AMPM = qw(AM PM);
 
-@Dsuf = ((qw(er e e e e e e e e e)) x 3, 'er');
+@Dsuf = ((qw(er e e e e e e e e e)) x 3, 'er', 'e');
 
 Date::Language::_build_lookups();
 

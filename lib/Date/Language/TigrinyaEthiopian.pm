@@ -46,7 +46,7 @@ if ( $] >= 5.006 ) {
 "\x{12F5}/\x{1230}"
 );
 
-@Dsuf = ("\x{12ed}") x 31;
+@Dsuf = ("\x{12ed}") x 32;
 }
 else {
 @DoW = (
@@ -79,7 +79,7 @@ else {
 "ድ/ሰ"
 );
 
-@Dsuf = ("ይ") x 31;
+@Dsuf = ("ይ") x 32;
 }
 
 Date::Language::_build_lookups();

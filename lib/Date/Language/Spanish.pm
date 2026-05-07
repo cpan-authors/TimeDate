@@ -21,7 +21,7 @@ our @DoWs = map { substr($_,0,3) } @DoW;
 our @MoYs = map { substr($_,0,3) } @MoY;
 our @AMPM = qw(AM PM);
 
-our @Dsuf = ((qw(ro do ro to to to mo vo no mo)) x 3, 'ro');
+our @Dsuf = ((qw(ro do ro to to to mo vo no mo)) x 3, 'ro', 'do');
 
 our ( %MoY, %DoW );
 Date::Language::_build_lookups();

@@ -54,7 +54,7 @@ our (@DoW, @DoWs, @MoY, @MoYs, @AMPM, @Dsuf, %MoY, %DoW);
 @MoYs = map { substr($_,0,3) } @MoY;
 @AMPM = qw(AM PM);
 
-@Dsuf = ('e') x 31;
+@Dsuf = ('e') x 32;
 
 Date::Language::_build_lookups();
 

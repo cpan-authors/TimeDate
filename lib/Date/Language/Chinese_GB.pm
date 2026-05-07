@@ -49,7 +49,7 @@ our (@DoW, @DoWs, @MoY, @MoYs, @AMPM, @Dsuf, %MoY, %DoW);
     "\xcf\xc2\xce\xe7",  # 下午
 );
 
-@Dsuf = ("\xc8\xd5") x 31;  # 日
+@Dsuf = ("\xc8\xd5") x 32;  # 日
 
 Date::Language::_build_lookups();
 

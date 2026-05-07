@@ -41,7 +41,7 @@ our %DsufMAP = (
       31 => 'inci',
 );
 
-our @Dsuf       = map{ $DsufMAP{$_} } sort {$a <=> $b} keys %DsufMAP;
+our @Dsuf       = ((map{ $DsufMAP{$_} } sort {$a <=> $b} keys %DsufMAP), '');
 
 our ( %MoY, %DoW );
 Date::Language::_build_lookups();
