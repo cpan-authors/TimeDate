@@ -207,7 +207,9 @@ sub format_Z {
 sub format_z {
  my $t = $_[0]->[9];
  my $o = defined $tzname ? tz_offset($tzname, $t) : tz_offset(undef,$t);
- sprintf("%+03d%02d", int($o / 3600), int(abs($o) % 3600) / 60);
+ my $sign = $o < 0 ? '-' : '+';
+ my $abs  = abs($o);
+ sprintf("%s%02d%02d", $sign, int($abs / 3600), int($abs % 3600) / 60);
 }
 
 sub format_c { &format_x . " " . &format_X }
