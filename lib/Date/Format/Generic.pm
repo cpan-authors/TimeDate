@@ -92,7 +92,7 @@ sub time2str
   {
    @$me = localtime($time);
   }
- $me->[9] = $time;
+ $me->[9] = $epoch;
  _subs($me,$fmt);
 }
 
