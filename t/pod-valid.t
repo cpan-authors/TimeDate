@@ -3,8 +3,8 @@ use warnings;
 use Test::More;
 
 BEGIN {
-    eval { require Pod::Checker; 1 }
-        or plan skip_all => 'Pod::Checker not available';
+    eval { require Pod::Checker; Pod::Checker->VERSION(1.44); 1 }
+        or plan skip_all => 'Pod::Checker 1.44+ not available';
 }
 
 plan tests => 1;
